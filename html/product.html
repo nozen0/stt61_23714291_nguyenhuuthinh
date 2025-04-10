@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mặt hàng</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <script src="../js/jquery-3.7.1.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <style>
+    header {
+      background: url(../img/promo1.jpg) no-repeat center center;
+      background-size: cover;
+      padding: 20px 0;
+      color: white;
+    }
+
+    header nav a {
+      margin-right: 15px;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    footer {
+      background-color: #f1f1f1;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .card-img-top {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    /* Nút vàng dễ nhìn hơn trên ảnh nền */
+    header a.btn-warning {
+      font-weight: 500;
+      color: #000;
+    }
+
+    header a.btn-warning:hover {
+      background-color: #e0a800;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="container py-3">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1 class="text-white">Danh sách mặt hàng</h1>
+      <nav>
+        <a href="../html/login.html" class="btn btn-warning">Đăng nhập</a>
+        <a href="../html/register.html" class="btn btn-warning">Đăng ký</a>
+        <a href="../html/product.html" class="btn btn-warning">Mặt hàng</a>
+        <a href="../html/cart.html" class="btn btn-warning">Giỏ hàng</a>
+        <a href="../html/account.html" class="btn btn-warning">Tài khoản</a>
+      </nav>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-6 offset-md-3">
+        <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+      </div>
+    </div>
+  </header>
+
+  <main class="container mt-4">
+    <div id="product-list"></div>
+  </main>
+
+  <!-- Modal chi tiết sản phẩm -->
+  <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="productModalTitle" class="modal-title"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="productModalBody"></div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const products = [
+      { id: 1, name: 'Táo', price: 20000, img: '../img/apple.jpg', description: 'Trái táo tươi ngon, giàu vitamin.' },
+      { id: 2, name: 'Lê', price: 25000, img: '../img/pear.jpg', description: 'Lê chín ngọt, rất bổ dưỡng.' },
+      { id: 3, name: 'Nho', price: 30000, img: '../img/grape.jpg', description: 'Nho vàng thơm ngon, phù hợp làm mứt.' },
+      { id: 4, name: 'Mít', price: 35000, img: '../img/jackfruit.jpg', description: 'Mít ngọt mát, nhiều dinh dưỡng.' },
+      { id: 5, name: 'Măng cụt', price: 40000, img: '../img/mangosteen.jpg', description: 'Măng cụt giòn, chua ngọt cân bằng.' },
+      { id: 6, name: 'Nhãn', price: 15000, img: '../img/longan.jpg', description: 'Nhãn tươi, mát và bổ dưỡng.' },
+      { id: 7, name: 'Chôm chôm', price: 18000, img: '../img/rambutan.jpg', description: 'Chôm chôm thơm ngon, béo ngậy.' },
+      { id: 8, name: 'Chuối', price: 12000, img: '../img/banana.jpg', description: 'Chuối chín ngọt, giàu chất xơ.' },
+      { id: 9, name: 'Cam', price: 22000, img: '../img/orange.jpg', description: 'Cam tươi, giàu vitamin C.' },
+      { id: 10, name: 'Xoài', price: 28000, img: '../img/mango.jpg', description: 'Xoài thơm, chín mọng, giàu dưỡng chất.' }
+    ];
+
+    function isLoggedIn() {
+      return localStorage.getItem('currentUser') !== null;
+    }
+
+    function addToCart(productId) {
+      if (!isLoggedIn()) {
+        alert("Bạn phải đăng nhập trước khi thêm sản phẩm vào giỏ hàng.");
+        window.location.href = "login.html";
+        return;
+      }
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+      const existingItem = cart.find(item => item.id === productId);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({ ...product, quantity: 1 });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      alert(`Đã thêm ${product.name} vào giỏ hàng.\nTổng tiền hiện tại: ${total.toLocaleString()} VND`);
+    }
+
+    function showProductDetail(productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+      document.getElementById('productModalTitle').innerText = product.name;
+      document.getElementById('productModalBody').innerHTML = `
+        <img src="${product.img}" alt="${product.name}" class="img-fluid mb-3" style="max-height:250px; object-fit:cover;">
+        <p>${product.description}</p>
+        <p class="font-weight-bold">Giá: ${product.price.toLocaleString()} VND</p>
+      `;
+      $('#productModal').modal('show');
+    }
+
+    function displayProducts(filteredProducts = products) {
+      const productList = document.getElementById('product-list');
+      productList.innerHTML = '';
+      const row = document.createElement('div');
+      row.classList.add('row');
+      filteredProducts.forEach(product => {
+        const col = document.createElement('div');
+        col.classList.add('col-md-4', 'mb-4');
+        col.innerHTML = `
+          <div class="card h-100">
+            <img class="card-img-top" src="${product.img}" alt="${product.name}" onclick="showProductDetail(${product.id})" style="cursor:pointer;">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">${product.name}</h5>
+              <p class="card-text">Giá: ${product.price.toLocaleString()} VND</p>
+              <button class="btn btn-primary mt-auto" onclick="addToCart(${product.id})">Thêm vào giỏ hàng</button>
+            </div>
+          </div>
+        `;
+        row.appendChild(col);
+      });
+      productList.appendChild(row);
+    }
+
+    function searchProducts() {
+      const keyword = document.getElementById('searchInput').value.toLowerCase();
+      const filteredProducts = products.filter(product =>
+        product.name.toLowerCase().includes(keyword)
+      );
+      displayProducts(filteredProducts);
+    }
+
+    document.getElementById('searchInput').addEventListener('input', searchProducts);
+    displayProducts();
+  </script>
+</body>
+
+</html>

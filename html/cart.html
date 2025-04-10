@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <style>
+        header {
+            background: url(../img/promo1.jpg) no-repeat center center;
+            background-size: cover;
+            padding: 30px 0;
+            min-height: 150px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        header nav a {
+            margin-right: 15px;
+        }
+
+        header a.btn-warning {
+            font-weight: 500;
+            color: #000;
+        }
+
+        header a.btn-warning:hover {
+            background-color: #e0a800;
+            color: white;
+        }
+
+        header {
+            background: url(../img/promo1.jpg) no-repeat center center;
+            background-size: cover;
+            padding: 20px 0;
+            color: white;
+        }
+
+        header nav a {
+            margin-right: 15px;
+        }
+
+        .cart-table {
+            margin-top: 20px;
+        }
+
+        .btn-sm {
+            margin: 0 2px;
+        }
+
+        header a.btn-warning {
+            font-weight: 500;
+            color: #000;
+        }
+
+        header a.btn-warning:hover {
+            background-color: #e0a800;
+            color: white;
+        }
+    </style>
+    <script>
+        function displayCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartContent = document.getElementById('cart-content');
+            cartContent.innerHTML = '';
+            if (cart.length === 0) {
+                cartContent.innerHTML = '<p class="text-warning">Giỏ hàng trống.</p>';
+                document.getElementById('cart-total').innerHTML = '';
+                return;
+            }
+
+            let table = `<table class="table table-bordered cart-table">
+                    <thead class="thead-light">
+                      <tr>
+                        <th>Sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+                        <th>Tổng</th>
+                        <th>Thao tác</th>
+                      </tr>
+                    </thead>
+                    <tbody>`;
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                table += `<tr>
+                    <td>${item.name}</td>
+                    <td>${item.price.toLocaleString()} VND</td>
+                    <td>${item.quantity}</td>
+                    <td>${itemTotal.toLocaleString()} VND</td>
+                    <td>
+                      <button class="btn btn-sm btn-success" onclick="updateQuantity(${index}, 1)">+</button>
+                      <button class="btn btn-sm btn-warning" onclick="updateQuantity(${index}, -1)">-</button>
+                    </td>
+                  </tr>`;
+            });
+
+            table += `</tbody></table>`;
+            cartContent.innerHTML = table;
+            document.getElementById('cart-total').innerHTML = `<h4>Tổng thành tiền: ${total.toLocaleString()} VND</h4>`;
+        }
+
+        function updateQuantity(index, change) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart[index]) {
+                cart[index].quantity += change;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+                localStorage.setItem('cart', JSON.stringify(cart));
+                displayCart();
+            }
+        }
+
+        function purchaseCart() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                alert("Bạn phải đăng nhập để mua hàng.");
+                window.location.href = "login.html";
+                return;
+            }
+
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart.length === 0) {
+                alert("Giỏ hàng trống.");
+                return;
+            }
+
+            currentUser.purchaseHistory = currentUser.purchaseHistory || [];
+            currentUser.purchaseHistory.push({
+                date: new Date().toLocaleString(),
+                items: cart
+            });
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            alert("Mua hàng thành công!");
+            localStorage.removeItem('cart');
+            displayCart();
+        }
+
+        function clearCart() {
+            if (confirm("Bạn có chắc muốn xóa toàn bộ giỏ hàng không?")) {
+                localStorage.removeItem('cart');
+                displayCart();
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            displayCart();
+        });
+    </script>
+</head>
+
+<body>
+    <header class="container py-3">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="text-white">Giỏ hàng</h1>
+            <nav>
+                <a href="../html/login.html" class="btn btn-warning">Đăng nhập</a>
+                <a href="../html/register.html" class="btn btn-warning">Đăng ký</a>
+                <a href="../html/product.html" class="btn btn-warning">Mặt hàng</a>
+                <a href="../html/cart.html" class="btn btn-warning">Giỏ hàng</a>
+                <a href="../html/account.html" class="btn btn-warning">Tài khoản</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="cart-content"></div>
+        <div id="cart-total" class="mt-3"></div>
+        <div class="mt-3">
+            <button class="btn btn-success" onclick="purchaseCart()">Mua hàng</button>
+            <button class="btn btn-danger" onclick="clearCart()">Xóa giỏ hàng</button>
+        </div>
+    </main>
+</body>
+
+</html>

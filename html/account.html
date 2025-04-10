@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài khoản</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <style>
+        header {
+            background: url(../img/promo1.jpg) no-repeat center center;
+            background-size: cover;
+            padding: 30px 0;
+            min-height: 150px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        header nav a {
+            margin-right: 15px;
+        }
+
+        header a.btn-warning {
+            font-weight: 500;
+            color: #000;
+        }
+
+        header a.btn-warning:hover {
+            background-color: #e0a800;
+            color: white;
+        }
+
+        header {
+            background: url(../img/promo1.jpg) no-repeat center center;
+            background-size: cover;
+            padding: 20px 0;
+        }
+
+        /* Các nút điều hướng chuyển sang màu vàng */
+        header nav a,
+        header nav button {
+            margin-right: 15px;
+            /* Sử dụng btn-warning cho nền vàng */
+        }
+
+        /* Nếu cần ghi đè hover */
+        header nav a:hover,
+        header nav button:hover {
+            color: #fff;
+        }
+
+        .purchase-history {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="container py-3">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="text-white">Tài khoản</h1>
+            <nav>
+                    <a href="../html/login.html" class="btn btn-warning">Đăng nhập</a>
+                    <a href="../html/register.html" class="btn btn-warning">Đăng ký</a>
+                    <a href="../html/product.html" class="btn btn-warning">Mặt hàng</a>
+                    <a href="../html/cart.html" class="btn btn-warning">Giỏ hàng</a>
+                    <a href="../html/account.html" class="btn btn-warning">Tài khoản</a>
+                <button class="btn btn-warning" onclick="logout()">Đăng xuất</button>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <div id="user-info" class="mb-4"></div>
+        <div id="purchase-history"></div>
+    </main>
+    <script>
+        function displayAccount() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const userInfoDiv = document.getElementById('user-info');
+            if (!currentUser) {
+                userInfoDiv.innerHTML = '<p class="text-danger">Chưa đăng nhập.</p>';
+                return;
+            }
+            userInfoDiv.innerHTML = `<h3>Xin chào, <span class="text-primary">${currentUser.username}</span></h3>`;
+
+            // Hiển thị lịch sử mua hàng
+            const historyDiv = document.getElementById('purchase-history');
+            if (!currentUser.purchaseHistory || currentUser.purchaseHistory.length === 0) {
+                historyDiv.innerHTML = '<p>Chưa có lịch sử mua hàng.</p>';
+                return;
+            }
+            let historyHtml = '<h4>Lịch sử mua hàng:</h4>';
+            currentUser.purchaseHistory.forEach((order, index) => {
+                historyHtml += `
+          <div class="card mb-3">
+            <div class="card-header">Đơn hàng ${index + 1} - Ngày: ${order.date}</div>
+            <div class="card-body">
+              <ul>`;
+                order.items.forEach(item => {
+                    historyHtml += `<li>${item.name} - Số lượng: ${item.quantity} - Tổng: ${(item.price * item.quantity).toLocaleString()} VND</li>`;
+                });
+                historyHtml += `</ul>
+            </div>
+          </div>`;
+            });
+            historyDiv.innerHTML = historyHtml;
+        }
+
+        function logout() {
+            if (confirm("Bạn có chắc muốn đăng xuất?")) {
+                localStorage.removeItem('currentUser');
+                window.location.href = "login.html";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            displayAccount();
+        });
+    </script>
+</body>
+
+</html>
