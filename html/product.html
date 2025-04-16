@@ -6,86 +6,152 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mặt hàng</title>
   <link rel="stylesheet" href="../css/bootstrap.min.css">
+ 
   <script src="../js/jquery-3.7.1.min.js"></script>
   <script src="../js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <style>
-    header {
-      background: url(../img/promo1.jpg) no-repeat center center;
-      background-size: cover;
-      padding: 20px 0;
-      
-    }
-    header h1 {
-            font-size: 32px;
-            font-weight: 700;
-            margin-top: 50px;
-            margin-left: 30px;
-            color: rgb(133, 255, 11);
-        }
-
-
-    header nav a {
-      margin-right: 15px;
-    }
-
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
     }
 
-    main {
-      padding: 20px;
+    /* HEADER */
+    header {
+      background-color: #ffffff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 10px 0;
     }
 
-    footer {
-      background-color: #f1f1f1;
-      padding: 10px;
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+    }
+
+    .logo img {
+      height: 60px;
+      /* Logo sát bên trái như trang index */
+    }
+
+    .hotline {
+      font-weight: bold;
+      color: #4caf50;
+      font-size: 18px;
+    }
+
+    nav {
+      background-color: #4caf50;
       text-align: center;
+    }
+
+    nav a {
+      color: #fff;
+      padding: 12px 18px;
+      display: inline-block;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #388e3c;
+    }
+
+    /* Thanh tìm kiếm dạng button mở rộng */
+    .search-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-input {
+      width: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: width 0.3s ease, opacity 0.3s ease;
+      border: none;
+      border-bottom: 2px solid #4caf50;
+      outline: none;
+      padding: 10px;
+      margin-right: 10px;
+      background-color: transparent;
+    }
+
+    .search-input.active {
+      width: 300px;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .search-btn {
+      background-color: #4caf50;
+      border: none;
+      color: #fff;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+
+    .search-btn:hover {
+      background-color: #388e3c;
+    }
+
+    /* MAIN CONTENT */
+    main {
+      padding: 40px 20px;
     }
 
     .card-img-top {
       width: 100%;
       height: 200px;
       object-fit: cover;
+      cursor: pointer;
     }
 
-    /* Nút vàng dễ nhìn hơn trên ảnh nền */
-    header a.btn-warning {
-      font-weight: 500;
-      color: #000;
+    /* Footer */
+    footer {
+      background-color: #2e7d32;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      margin-top: 40px;
     }
-
-    header a.btn-warning:hover {
-      background-color: #e0a800;
-      
-    }
-    header row mt-3{
-      margin-left: 30px;
+    input {
+      margin-top: 10px;
     }
   </style>
 </head>
 
 <body>
-  <header class="container py-3">
-    <div class="d-flex justify-content-between align-items-center">
-      <h1 class="text-white">Danh sách mặt hàng</h1>
-      <nav>
-        <a href="../html/index.html" class="btn btn-warning">Trang chủ</a>
-        <a href="../html/login.html" class="btn btn-warning">Đăng nhập</a>
-        <a href="../html/register.html" class="btn btn-warning">Đăng ký</a>
-        <a href="../html/product.html" class="btn btn-warning">Mặt hàng</a>
-        <a href="../html/cart.html" class="btn btn-warning">Giỏ hàng</a>
-        <a href="../html/account.html" class="btn btn-warning">Tài khoản</a>
-      </nav>
+  <!-- Header -->
+  <header>
+    <div class="header-top container">
+      <div class="logo">
+        <img src="../img/logo.png" alt="Logo Cửa hàng trái cây">
+      </div>
+      <div class="hotline">Hotline: 0989 123 456</div>
     </div>
-    <div class="row mt-3">
-      <div class="col-md-6 offset-md-3">
-        <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+    <nav class="text-center">
+      <a href="../html/index.html">Trang chủ</a>
+      <a href="../html/product.html">Sản phẩm</a>
+      <a href="../html/cart.html">Giỏ hàng</a>
+      <a href="../html/account.html">Tài khoản</a>
+      <a href="../html/login.html">Đăng nhập</a>
+      <a href="../html/register.html">Đăng ký</a>
+    </nav>
+    <div class="container search-row">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+        </div>
       </div>
     </div>
   </header>
 
+  <!-- Main Content -->
   <main class="container mt-4">
     <div id="product-list"></div>
   </main>
@@ -107,6 +173,11 @@
       </div>
     </div>
   </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2023 Cửa hàng trái cây | Thiết kế bởi Nguyễn Hữu Thịnh</p>
+  </footer>
 
   <script>
     const products = [
@@ -168,7 +239,7 @@
         col.classList.add('col-md-4', 'mb-4');
         col.innerHTML = `
           <div class="card h-100">
-            <img class="card-img-top" src="${product.img}" alt="${product.name}" onclick="showProductDetail(${product.id})" style="cursor:pointer;">
+            <img class="card-img-top" src="${product.img}" alt="${product.name}" onclick="showProductDetail(${product.id})">
             <div class="card-body d-flex flex-column">
               <h5 class="card-title">${product.name}</h5>
               <p class="card-text">Giá: ${product.price.toLocaleString()} VND</p>
