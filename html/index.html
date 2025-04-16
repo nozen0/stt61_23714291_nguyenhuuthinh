@@ -2,296 +2,236 @@
 <html lang="vi">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Trang chủ - Cửa hàng trái cây</title>
-    
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/styles.css">
-    <script src="../js/jquery-3.7.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <style>
-        /* Reset margin/padding chung và đặt font toàn trang */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mặt hàng</title>
 
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f1f1f1;
-            color: #333;
-            line-height: 1.6;
-        }
+  <link rel="stylesheet" href="../css/bootstrap.min.css" />
+  <script src="../js/jquery-3.7.1.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
 
-        /* Container chung, canh đều hai bên */
-        .container-custom {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #fefefe;
+      color: #333;
+    }
 
-        /* HEADER */
-        header {
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(../img/promo1.jpg) no-repeat center center;
-            background-size: cover;
-            padding: 20px 0;
-            min-height: 150px;
-            color: white;
-            
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
+    /* HEADER */
+    header {
+      background-color: #ffffff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 10px 0;
+    }
 
-        header h1 {
-            font-size: 32px;
-            font-weight: 700;
-            margin-top: 50px;
-            margin-left: 30px;
-            color: chartreuse;
-        }
+    .header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  max-width: 1140px;
+  margin: 0 auto;
+}
 
-        /* Navigation: hiển thị ngang, canh đều */
-        header nav {
-            margin-top: 50px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+.logo img {
+  height: 60px;
+  object-fit: contain;
+}
 
-        header nav a {
-            padding: 8px 12px;
-            background-color: #ffc107;
-            border: none;
-            border-radius: 4px;
-            font-weight: 500;
-            color: #000;
-            text-decoration: none;
-            transition: background-color 0.3s, color 0.3s;
-        }
+    .hotline {
+      font-weight: bold;
+      color: #4caf50;
+      font-size: 18px;
+    }
 
-        header nav a:hover {
-            background-color: #e0a800;
-            color: #fff;
-        }
+    nav {
+      background-color: #4caf50;
+    }
 
-        /* CAROUSEL */
-        .carousel-item {
-            transition: transform 0.6s ease-in-out;
-        }
+    nav a {
+      color: #fff;
+      padding: 12px 18px;
+      display: inline-block;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
 
-        .carousel-inner {
-            border-radius: 5px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+    nav a:hover {
+      background-color: #388e3c;
+    }
 
-        /* Card sản phẩm với hiệu ứng hover */
-        .card {
-            border: none;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
+    /* SẢN PHẨM */
+    .product-card {
+      border: 1px solid #eee;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
 
-        .card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    }
 
-        /* MAIN CONTENT */
-        main {
-            background-color: #fff;
-            padding: 30px 20px;
-            margin-top: 30px;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+    .product-card img {
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px 8px 0 0;
+    }
 
-        main h2,
-        main h3 {
-            margin-bottom: 15px;
-            text-align: center;
-        }
+    .card-body {
+      padding: 15px;
+    }
 
-        main p {
-            margin-bottom: 15px;
-            text-align: justify;
-        }
+    .card-title {
+      color: #2e7d32;
+      font-size: 18px;
+      font-weight: 600;
+    }
 
-        /* Footer */
-        footer {
-            background-color: #fff;
-            padding: 15px 20px;
-            margin-top: 30px;
-            border-top: 1px solid #ddd;
-            text-align: center;
-        }
+    .btn-primary {
+      background-color: #4caf50;
+      border: none;
+    }
 
-        @media (max-width: 768px) {
-            header nav {
-                justify-content: center;
-            }
-            .card {
-                margin-bottom: 15px;
-            }
-        }
-    </style>
+    .btn-primary:hover {
+      background-color: #388e3c;
+    }
+
+    /* MAIN CONTENT */
+    main {
+      padding: 40px 20px;
+    }
+
+    main h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #2e7d32;
+    }
+
+    /* FOOTER */
+    footer {
+      background-color: #2e7d32;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .header-top {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      nav a {
+        padding: 10px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <!-- Header -->
-    <header class="container-custom">
-        <div class="d-flex justify-content-between align-items-center flex-wrap">
-            <h1>Cửa hàng trái cây</h1>
-            <nav>
-                <a href="../html/index.html">Trang chủ</a>
-                <a href="../html/login.html">Đăng nhập</a>
-                <a href="../html/register.html">Đăng ký</a>
-                <a href="../html/product.html">Mặt hàng</a>
-                <a href="../html/cart.html">Giỏ hàng</a>
-                <a href="../html/account.html">Tài khoản</a>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Danh sách 9 sản phẩm -->
-<!-- Danh sách 9 sản phẩm -->
-<div class="container-custom mb-4">
-    <div class="row">
-        <!-- Sản phẩm 1 -->
-        <div class="col-md-4 col-sm-6 mb-4">
-            <div class="card product-card">
-                <img src="../img/grape.jpg" class="card-img-top" alt="Sản phẩm 1" style="height:200px; object-fit:cover;">
-                <div class="card-body">
-                    <h5 class="card-title">nho</h5>
-                    <p class="card-text">nho Chất lượng tốt, giá cả hợp lý.</p>
-                    <a href="../html/product.html" class="btn btn-primary">Xem chi tiết</a>
-                </div>
-            </div>
-        </div>
-        <!-- Sản phẩm 2 -->
-        <div class="col-md-4 col-sm-6 mb-4">
-            <div class="card product-card">
-                <img src="../img/jackfruit.jpg" class="card-img-top" alt="Sản phẩm 2" style="height:200px; object-fit:cover;">
-                <div class="card-body">
-                    <h5 class="card-title">Mít</h5>
-                    <p class="card-text">Mít, độc đáo và hấp dẫn.</p>
-                    <a href="../html/product.html" class="btn btn-primary">Xem chi tiết</a>
-                </div>
-            </div>
-        </div>
-        <!-- Sản phẩm 3 -->
-        <div class="col-md-4 col-sm-6 mb-4">
-            <div class="card product-card">
-                <img src="../img/longan.jpg" class="card-img-top" alt="Sản phẩm 3" style="height:200px; object-fit:cover;">
-                <div class="card-body">
-                    <h5 class="card-title">Nhãn</h5>
-                    <p class="card-text">Nhãn Sản phẩm bán chạy, được ưu thích.</p>
-                    <a href="../html/product.html" class="btn btn-primary">Xem chi tiết</a>
-                </div>
-            </div>
-        </div>
-        <!-- Sản phẩm 4 -->
-        <div class="col-md-4 col-sm-6 mb-4">
-            <div class="card product-card">
-                <img src="../img/mango.jpg" class="card-img-top" alt="Sản phẩm 4" style="height:200px; object-fit:cover;">
-                <div class="card-body">
-                    <h5 class="card-title">Xoài</h5>
-                    <p class="card-text">Xoài Độc đáo, thời thượng.</p>
-                    <a href="../html/product.html" class="btn btn-primary">Xem chi tiết</a>
-                </div>
-            </div>
-        </div>
-        <!-- Sản phẩm 5 -->
-        <div class="col-md-4 col-sm-6 mb-4">
-            <div class="card product-card">
-                <img src="../img/apple.jpg" class="card-img-top" alt="Sản phẩm 5" style="height:200px; object-fit:cover;">
-                <div class="card-body">
-                    <h5 class="card-title">Táo</h5>
-                    <p class="card-text">Táo Sự lựa chọn hoàn hảo cho mọi gia đình.</p>
-                    <a href="../html/product.html" class="btn btn-primary">Xem chi tiết</a>
-                </div>
-            </div>
-        </div>
-        <!-- Sản phẩm 6 -->
-        <div class="col-md-4 col-sm-6 mb-4">
-            <div class="card product-card">
-                <img src="../img/banana.jpg" class="card-img-top" alt="Sản phẩm 6" style="height:200px; object-fit:cover;">
-                <div class="card-body">
-                    <h5 class="card-title">Chuối</h5>
-                    <p class="card-text">Chuối Đa dạng, phong phú với nhiều lựa chọn.</p>
-                    <a href="../html/product.html" class="btn btn-primary">Xem chi tiết</a>
-                </div>
-            </div>
-        </div>
-        <!-- Sản phẩm 7 -->
-        <div class="col-md-4 col-sm-6 mb-4">
-            <div class="card product-card">
-                <img src="../img/mangosteen.jpg" class="card-img-top" alt="Sản phẩm 7" style="height:200px; object-fit:cover;">
-                <div class="card-body">
-                    <h5 class="card-title">Măng cụt</h5>
-                    <p class="card-text">Mô tả ngắn về sản phẩm. Chất lượng đỉnh cao, giá trị vượt trội.</p>
-                    <a href="../html/product.html" class="btn btn-primary">Xem chi tiết</a>
-                </div>
-            </div>
-        </div>
-        <!-- Sản phẩm 8 -->
-        <div class="col-md-4 col-sm-6 mb-4">
-            <div class="card product-card">
-                <img src="../img/pear.jpg" class="card-img-top" alt="Sản phẩm 8" style="height:200px; object-fit:cover;">
-                <div class="card-body">
-                    <h5 class="card-title">Lê</h5>
-                    <p class="card-text">Mô tả ngắn về sản phẩm . Mới nhất trong bộ sưu tập của chúng tôi.</p>
-                    <a href="../html/product.html" class="btn btn-primary">Xem chi tiết</a>
-                </div>
-            </div>
-        </div>
-        <!-- Sản phẩm 9 -->
-        <div class="col-md-4 col-sm-6 mb-4">
-            <div class="card product-card">
-                <img src="../img/orange.jpg" class="card-img-top" alt="Sản phẩm 9" style="height:200px; object-fit:cover;">
-                <div class="card-body">
-                    <h5 class="card-title">Cam</h5>
-                    <p class="card-text">Mô tả ngắn về sản phẩm. Độc đáo, chất lượng vượt trội.</p>
-                    <a href="../html/product.html" class="btn btn-primary">Xem chi tiết</a>
-                </div>
-            </div>
-        </div>
+  <!-- Header -->
+  <header>
+    <div class="header-top">
+      <div class="logo">
+        <img src="../img/logo.png" alt="Logo Cửa hàng trái cây" />
+      </div>
+      <div class="hotline">Hotline: 0989 123 456</div>
     </div>
-</div>
+    <nav class="text-center">
+      <a href="../html/index.html">Trang chủ</a>
+      <a href="../html/product.html">Sản phẩm</a>
+      <a href="../html/cart.html">Giỏ hàng</a>
+      <a href="../html/account.html">Tài khoản</a>
+      <a href="../html/login.html">Đăng nhập</a>
+      <a href="../html/register.html">Đăng ký</a>
+    </nav>
+  </header>
 
+  <!-- Danh sách sản phẩm -->
+  <div class="container mt-4">
+    <div class="row">
+      <!-- Ví dụ sản phẩm 1 -->
+      <div class="col-md-4 col-sm-6 mb-4">
+        <div class="card product-card">
+          <img src="../img/grape.jpg" class="card-img-top" alt="Nho" />
+          <div class="card-body">
+            <h5 class="card-title">Nho Mỹ</h5>
+            <p class="card-text">Tươi ngon, ngọt lịm, nhập khẩu 100%</p>
+            <a href="../html/product.html" class="btn btn-primary">Xem chi tiết</a>
+          </div>
+        </div>
+      </div>
+      <!-- Ví dụ sản phẩm 2 -->
+      <div class="col-md-4 col-sm-6 mb-4">
+        <div class="card product-card">
+          <img src="../img/apple.jpg" class="card-img-top" alt="Táo" />
+          <div class="card-body">
+            <h5 class="card-title">Táo</h5>
+            <p class="card-text">Tươi ngon, ngọt lịm, nhập khẩu 100%</p>
+            <a href="../html/product.html" class="btn btn-primary">Xem chi tiết</a>
+          </div>
+        </div>
+      </div>
+      <!-- Ví dụ sản phẩm 3 -->
+      <div class="col-md-4 col-sm-6 mb-4">
+        <div class="card product-card">
+          <img src="../img/jackfruit.jpg" class="card-img-top" alt="Mít" />
+          <div class="card-body">
+            <h5 class="card-title">Mít</h5>
+            <p class="card-text">Tươi ngon, ngọt lịm, nhập khẩu 100%</p>
+            <a href="../html/product.html" class="btn btn-primary">Xem chi tiết</a>
+          </div>
+        </div>
+      </div>
+      <!-- Các sản phẩm khác có thể được thêm tương tự... -->
+      <div class="col-md-4 col-sm-6 mb-4">
+        <div class="card product-card">
+          <img src="../img/banana.jpg" class="card-img-top" alt="Chuối" />
+          <div class="card-body">
+            <h5 class="card-title">Chuối</h5>
+            <p class="card-text">Tươi ngon, ngọt lịm, nhập khẩu 100%</p>
+            <a href="../html/product.html" class="btn btn-primary">Xem chi tiết</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 mb-4">
+        <div class="card product-card">
+          <img src="../img/mango.jpg" class="card-img-top" alt="Xoài" />
+          <div class="card-body">
+            <h5 class="card-title">Xoài</h5>
+            <p class="card-text">Tươi ngon, ngọt lịm, nhập khẩu 100%</p>
+            <a href="../html/product.html" class="btn btn-primary">Xem chi tiết</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 mb-4">
+        <div class="card product-card">
+          <img src="../img/orange.jpg" class="card-img-top" alt="Cam" />
+          <div class="card-body">
+            <h5 class="card-title">Cam</h5>
+            <p class="card-text">Tươi ngon, ngọt lịm, nhập khẩu 100%</p>
+            <a href="../html/product.html" class="btn btn-primary">Xem chi tiết</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <!-- Main Content -->
-    <main class="container-custom">
-        <h2>Chào mừng đến với cửa hàng trái cây!</h2>
-        <p>
-            Khám phá những loại trái cây tươi ngon, đa dạng cùng không gian mua sắm trực tuyến hiện đại.
-            Trang web của chúng tôi cung cấp thông tin chi tiết về sản phẩm, các chương trình khuyến mãi hấp dẫn và hỗ trợ khách hàng tận tâm.
-        </p>
+  <!-- Nội dung chính phụ (có thể dùng cho giới thiệu) -->
+  <main class="container">
+    <h2>Chào mừng đến với cửa hàng trái cây!</h2>
+    <p>
+      Khám phá những loại trái cây tươi ngon được chọn lọc kỹ lưỡng. Giao hàng tận nơi, cam kết chất lượng và độ tươi mới.
+    </p>
+    <p><strong>Nguyễn Hữu Thịnh</strong> - MSSV: <strong>23714291</strong></p>
+  </main>
 
-        <!-- Phần giới thiệu dự án -->
-        <section class="mt-5">
-            <h3>Giới thiệu người thực hiện</h3>
-            <p>
-                Xin chào! Tôi là <strong>Nguyễn Hữu Thịnh</strong>, sinh viên với mã số sinh viên <strong>23714291</strong>.
-                Dự án "Cửa hàng trái cây" được xây dựng nhằm giúp người dùng dễ dàng lựa chọn sản phẩm, thêm sản phẩm vào giỏ hàng,
-                quản lý tài khoản và theo dõi lịch sử mua sắm qua giao diện thân thiện và hiện đại.
-            </p>
-            <p>
-                Qua dự án này, tôi đã ôn tập và thực hành nhiều kiến thức về HTML, CSS, JavaScript, cũng như làm quen với Bootstrap và jQuery.
-                Mục tiêu của tôi là tạo ra một trải nghiệm mua sắm trực tuyến vừa đơn giản, vừa hiệu quả.
-            </p>
-            <p>
-                Cảm ơn bạn đã ghé thăm trang web của chúng tôi. Hy vọng bạn sẽ tìm thấy những sản phẩm ưng ý và có trải nghiệm mua sắm tuyệt vời!
-            </p>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="container-custom">
-        <p>&copy; 2023 Cửa hàng trái cây - Thực hiện bởi Nguyễn Hữu Thịnh (MSSV: 23714291)</p>
-    </footer>
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2023 Cửa hàng trái cây | Thiết kế bởi Nguyễn Hữu Thịnh</p>
+  </footer>
 </body>
 
 </html>
