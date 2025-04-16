@@ -2,138 +2,193 @@
 <html lang="vi">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tài khoản</title>
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/styles.css">
-    <script src="../js/jquery-3.7.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <style>
-        header {
-            background: url(../img/promo1.jpg) no-repeat center center;
-            background-size: cover;
-            padding: 30px 0;
-            min-height: 150px;
-            color: white;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tài khoản</title>
 
-        header h1 {
-            font-size: 32px;
-            font-weight: bold;
-            margin: 0;
-            color: brown;
-        }
-        header nav {
-            margin-top: 50px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-left: 20px;
-        }
+  <link rel="stylesheet" href="../css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <script src="../js/jquery-3.7.1.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
 
-        header nav a {
-            margin-right: 15px;
-        }
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #fefefe;
+      color: #333;
+    }
 
-        header a.btn-warning {
-            font-weight: 500;
-            color: #000;
-        }
+    /* HEADER */
+    header {
+      background-color: #ffffff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 10px 0;
+    }
 
-        header a.btn-warning:hover {
-            background-color: #e0a800;
-            color: white;
-        }
+    .header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  max-width: 1140px;
+  margin: 0 auto;
+}
 
-        header {
-            background: url(../img/promo1.jpg) no-repeat center center;
-            background-size: cover;
-            padding: 20px 0;
-        }
+.logo img {
+  height: 60px;
+  object-fit: contain;
+}
 
-        /* Các nút điều hướng chuyển sang màu vàng */
-        header nav a,
-        header nav button {
-            margin-right: 15px;
-            /* Sử dụng btn-warning cho nền vàng */
-        }
+    .hotline {
+      font-weight: bold;
+      color: #4caf50;
+      font-size: 18px;
+    }
 
-        /* Nếu cần ghi đè hover */
-        header nav a:hover,
-        header nav button:hover {
-            color: #fff;
-        }
+    nav {
+      background-color: #4caf50;
+      text-align: center;
+    }
 
-        .purchase-history {
-            margin-top: 20px;
-        }
-    </style>
+    nav a,
+    nav button {
+      color: #fff;
+      padding: 12px 18px;
+      display: inline-block;
+      text-decoration: none;
+      border: none;
+      background: none;
+      transition: background 0.3s;
+      cursor: pointer;
+    }
+
+    nav a:hover,
+    nav button:hover {
+      background-color: #388e3c;
+    }
+
+    /* MAIN CONTENT */
+    main {
+      padding: 40px 20px;
+    }
+
+    main h2,
+    main h3 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #2e7d32;
+    }
+
+    /* Card lịch sử mua hàng */
+    .card {
+      margin-bottom: 20px;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Footer */
+    footer {
+      background-color: #2e7d32;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .header-top {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      nav a,
+      nav button {
+        padding: 10px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <header class="container py-3">
-        <div class="d-flex justify-content-between align-items-center">
-            <h1 class="text-white">Tài khoản</h1>
-            <nav>
-                <a href="../html/index.html" class="btn btn-warning">Trang chủ</a>
-                <a href="../html/login.html" class="btn btn-warning">Đăng nhập</a>
-                <a href="../html/register.html" class="btn btn-warning">Đăng ký</a>
-                <a href="../html/product.html" class="btn btn-warning">Mặt hàng</a>
-                <a href="../html/cart.html" class="btn btn-warning">Giỏ hàng</a>
-                <a href="../html/account.html" class="btn btn-warning">Tài khoản</a>
-                <button class="btn btn-warning" onclick="logout()">Đăng xuất</button>
-            </nav>
-        </div>
-    </header>
-    <main class="container">
-        <div id="user-info" class="mb-4"></div>
-        <div id="purchase-history"></div>
-    </main>
-    <script>
-        function displayAccount() {
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            const userInfoDiv = document.getElementById('user-info');
-            if (!currentUser) {
-                userInfoDiv.innerHTML = '<p class="text-danger">Chưa đăng nhập.</p>';
-                return;
-            }
-            userInfoDiv.innerHTML = `<h3>Xin chào, <span class="text-primary">${currentUser.username}</span></h3>`;
+  <!-- Header -->
+  <header>
+    <div class="header-top">
+      <div class="logo">
+        <img src="../img/logo.png" alt="Logo Cửa hàng trái cây" />
+      </div>
+      <div class="hotline">Hotline: 0989 123 456</div>
+    </div>
+    <nav class="text-center">
+        <a href="../html/index.html">Trang chủ</a>
+        <a href="../html/product.html">Sản phẩm</a>
+        <a href="../html/cart.html">Giỏ hàng</a>
+        <a href="../html/account.html">Tài khoản</a>
+        <a href="../html/login.html">Đăng nhập</a>
+        <a href="../html/register.html">Đăng ký</a>
+      </nav>
+  </header>
 
-            // Hiển thị lịch sử mua hàng
-            const historyDiv = document.getElementById('purchase-history');
-            if (!currentUser.purchaseHistory || currentUser.purchaseHistory.length === 0) {
-                historyDiv.innerHTML = '<p>Chưa có lịch sử mua hàng.</p>';
-                return;
-            }
-            let historyHtml = '<h4>Lịch sử mua hàng:</h4>';
-            currentUser.purchaseHistory.forEach((order, index) => {
-                historyHtml += `
-          <div class="card mb-3">
+  <!-- Nội dung trang "Tài khoản" -->
+  <main class="container">
+    <div id="user-info" class="mb-4"></div>
+    <div id="purchase-history"></div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2023 Cửa hàng trái cây | Thiết kế bởi Nguyễn Hữu Thịnh</p>
+  </footer>
+
+  <script>
+    function displayAccount() {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      const userInfoDiv = document.getElementById('user-info');
+      if (!currentUser) {
+        userInfoDiv.innerHTML = '<p class="text-danger">Chưa đăng nhập.</p>';
+        return;
+      }
+      userInfoDiv.innerHTML = `<h3>Xin chào, <span class="text-primary">${currentUser.username}</span></h3>`;
+
+      // Hiển thị lịch sử mua hàng
+      const historyDiv = document.getElementById('purchase-history');
+      if (!currentUser.purchaseHistory || currentUser.purchaseHistory.length === 0) {
+        historyDiv.innerHTML = '<p>Chưa có lịch sử mua hàng.</p>';
+        return;
+      }
+      let historyHtml = '<h4>Lịch sử mua hàng:</h4>';
+      currentUser.purchaseHistory.forEach((order, index) => {
+        historyHtml += `
+          <div class="card">
             <div class="card-header">Đơn hàng ${index + 1} - Ngày: ${order.date}</div>
             <div class="card-body">
               <ul>`;
-                order.items.forEach(item => {
-                    historyHtml += `<li>${item.name} - Số lượng: ${item.quantity} - Tổng: ${(item.price * item.quantity).toLocaleString()} VND</li>`;
-                });
-                historyHtml += `</ul>
+        order.items.forEach(item => {
+          historyHtml += `<li>${item.name} - Số lượng: ${item.quantity} - Tổng: ${(item.price * item.quantity).toLocaleString()} VND</li>`;
+        });
+        historyHtml += `</ul>
             </div>
           </div>`;
-            });
-            historyDiv.innerHTML = historyHtml;
-        }
+      });
+      historyDiv.innerHTML = historyHtml;
+    }
 
-        function logout() {
-            if (confirm("Bạn có chắc muốn đăng xuất?")) {
-                localStorage.removeItem('currentUser');
-                window.location.href = "login.html";
-            }
-        }
+    function logout() {
+      if (confirm("Bạn có chắc muốn đăng xuất?")) {
+        localStorage.removeItem('currentUser');
+        window.location.href = "login.html";
+      }
+    }
 
-        document.addEventListener("DOMContentLoaded", function () {
-            displayAccount();
-        });
-    </script>
+    document.addEventListener("DOMContentLoaded", function () {
+      displayAccount();
+    });
+  </script>
 </body>
 
 </html>
